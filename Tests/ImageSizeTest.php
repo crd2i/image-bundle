@@ -7,18 +7,35 @@ use Paradigma\Bundle\ImageBundle\Libs\ImageSize;
 
 class ImageSizeTest extends \PHPUnit_Framework_TestCase
 {
-    public function test()
+    /**
+     * Test the image resize
+     */
+    public function testSize()
     {
-        $imageResizer = new ImageResizer();
+        $imageSize = new ImageSize(10, 10);
 
-        $filename_input  = __DIR__ . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'test.jpg';
-        $filename_output = __DIR__ . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'test_16.jpg';
+        $this->assertEquals(1, $imageSize->getRatio(ImageSize::RELATION_WIDTH));
+        $this->assertEquals(1, $imageSize->getRatio(ImageSize::RELATION_HEIGHT));
 
-        $imageResizer->resize($filename_input, $filename_output, new ImageSize(16, 16));
+        $resizeImageSize = $imageSize->getResizedSize(new ImageSize(5, 10), ImageResizer::RESIZE_TYPE_EXACT);
+        $this->assertEquals(5, $resizeImageSize->getWidth());
+        $this->assertEquals(10, $resizeImageSize->getHeight());
 
-        $this->assertTrue(file_exists($filename_output));
+        $resizeImageSize = $imageSize->getResizedSize(new ImageSize(5, 10), ImageResizer::RESIZE_TYPE_CROP);
+        $this->assertEquals(10, $resizeImageSize->getWidth());
+        $this->assertEquals(10, $resizeImageSize->getHeight());
 
-        @unlink($filename_output);
+        $resizeImageSize = $imageSize->getResizedSize(new ImageSize(5, 5), ImageResizer::RESIZE_TYPE_AUTO);
+        $this->assertEquals(5, $resizeImageSize->getWidth());
+        $this->assertEquals(5, $resizeImageSize->getHeight());
+
+        $resizeImageSize = $imageSize->getResizedSize(new ImageSize(5, 10), ImageResizer::RESIZE_TYPE_LANDSCAPE);
+        $this->assertEquals(5, $resizeImageSize->getWidth());
+        $this->assertEquals(5, $resizeImageSize->getHeight());
+
+        $resizeImageSize = $imageSize->getResizedSize(new ImageSize(5, 10), ImageResizer::RESIZE_TYPE_PORTRAIT);
+        $this->assertEquals(10, $resizeImageSize->getWidth());
+        $this->assertEquals(10, $resizeImageSize->getHeight());
     }
 
 }
