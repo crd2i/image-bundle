@@ -35,7 +35,7 @@ class ImageResizer
             $type = exif_imagetype($input);
         } else {
             $info = getimagesize($input);
-            $type = $input[2];
+            $type = $info[2];
             unset($info);
         }
 
