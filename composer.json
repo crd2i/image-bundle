@@ -1,9 +1,9 @@
 {
-    "name": "paradigmate/image-bundle",
+    "name": "crd2i/image-bundle",
     "type": "symfony-bundle",
     "description": "Symfony2 bundle for image resizing.",
     "keywords": ["image", "resize"],
-    "homepage": "https://github.com/paradigmate/ImageBundle",
+    "homepage": "https://github.com/crd2i/ImageBundle",
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +20,7 @@
         "ext-exif": "to speed up some functions instead of using GD library"
     },
     "autoload": {
-        "psr-0": { "Paradigma\\Bundle\\ImageBundle": "" }
+        "psr-0": { "Crd2i\\Bundle\\ImageBundle": "" }
     },
-    "target-dir": "Paradigma/Bundle/ImageBundle"
+    "target-dir": "Crd2i/Bundle/ImageBundle"
 }
