@@ -9,4 +9,4 @@ Requires : Requires PHP5, GD library and optional EXIF library.
 
 Install as a requirement in your composer.yml
 
-    "paradigmate/imagebundle": "dev-master"
+    "crd2i/imagebundle": "dev-master"

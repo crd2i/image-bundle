@@ -1,9 +1,9 @@
 <?php
 
-namespace Paradigma\Bundle\ImageBundle\Tests;
+namespace Crd2i\Bundle\ImageBundle\Tests;
 
-use Paradigma\Bundle\ImageBundle\Libs\ImageResizer;
-use Paradigma\Bundle\ImageBundle\Libs\ImageSize;
+use Crd2i\Bundle\ImageBundle\Libs\ImageResizer;
+use Crd2i\Bundle\ImageBundle\Libs\ImageSize;
 
 class ImageSizeTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Paradigma\Bundle\ImageBundle;
+namespace Crd2i\Bundle\ImageBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

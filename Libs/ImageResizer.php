@@ -1,10 +1,10 @@
 <?php
 
-namespace Paradigma\Bundle\ImageBundle\Libs;
+namespace Crd2i\Bundle\ImageBundle\Libs;
 
 /**
  * Class ImageResizer
- * @package Paradigma\Bundle\ImageBundle\Libs
+ * @package Crd2i\Bundle\ImageBundle\Libs
  */
 class ImageResizer
 {

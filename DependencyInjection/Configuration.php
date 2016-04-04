@@ -1,6 +1,6 @@
 <?php
 
-namespace Paradigma\Bundle\ImageBundle\DependencyInjection;
+namespace Crd2i\Bundle\ImageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

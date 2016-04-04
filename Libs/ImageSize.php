@@ -1,10 +1,10 @@
 <?php
 
-namespace Paradigma\Bundle\ImageBundle\Libs;
+namespace Crd2i\Bundle\ImageBundle\Libs;
 
 /**
  * Class ImageSize
- * @package Paradigma\Bundle\ImageBundle\Lib
+ * @package Crd2i\Bundle\ImageBundle\Lib
  */
 class ImageSize {
 
