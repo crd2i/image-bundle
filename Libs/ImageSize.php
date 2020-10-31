@@ -77,7 +77,6 @@ class ImageSize {
     }
 
     /**
-     * @param ImageSize $originalSize
      * @param ImageSize $newSize
      * @param $resize_type
      * @return ImageSize
@@ -107,6 +106,10 @@ class ImageSize {
                 return $this->getOptimalCrop($newSize);
                 break;
 
+            case ImageResizer::RESIZE_TYPE_FILL:
+                return $this->getOptimalFill($newSize);
+                break;
+
             case ImageResizer::RESIZE_TYPE_AUTO:
             default:
                 return $this->getSizeByAuto($newSize);
@@ -115,7 +118,6 @@ class ImageSize {
     }
 
     /**
-     * @param ImageSize $originalSize
      * @param $newHeight
      * @return mixed
      */
@@ -128,7 +130,6 @@ class ImageSize {
     }
 
     /**
-     * @param ImageSize $originalSize
      * @param $newWidth
      * @return mixed
      */
@@ -141,7 +142,6 @@ class ImageSize {
     }
 
     /**
-     * @param ImageSize $originalSize
      * @param ImageSize $newSize
      * @return ImageSize
      */
@@ -175,7 +175,6 @@ class ImageSize {
     }
 
     /**
-     * @param ImageSize $originalSize
      * @param ImageSize $newSize
      * @return ImageSize
      */
@@ -185,6 +184,28 @@ class ImageSize {
         $heightRatio = $this->getHeight() / $newSize->getHeight();
 
         if ($heightRatio < $widthRatio) {
+            return new ImageSize(
+                $this->getWidth() / $heightRatio,
+                $this->getHeight() / $heightRatio
+            );
+        } else {
+            return new ImageSize(
+                $this->getWidth() / $widthRatio,
+                $this->getHeight() / $widthRatio
+            );
+        }
+    }
+
+    /**
+     * @param ImageSize $newSize
+     * @return ImageSize
+     */
+    private function getOptimalFill(ImageSize $newSize)
+    {
+        $widthRatio = $this->getWidth() / $newSize->getWidth();
+        $heightRatio = $this->getHeight() / $newSize->getHeight();
+
+        if ($heightRatio > $widthRatio) {
             return new ImageSize(
                 $this->getWidth() / $heightRatio,
                 $this->getHeight() / $heightRatio
