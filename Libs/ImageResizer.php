@@ -10,6 +10,7 @@ class ImageResizer
 {
     const RESIZE_TYPE_AUTO = 'auto';
     const RESIZE_TYPE_CROP = 'crop';
+    const RESIZE_TYPE_FILL = 'fill';
     const RESIZE_TYPE_EXACT = 'exact';
     const RESIZE_TYPE_PORTRAIT = 'portrait';
     const RESIZE_TYPE_LANDSCAPE = 'landscape';
@@ -39,7 +40,6 @@ class ImageResizer
             unset($info);
         }
 
-
         $originalSize = new ImageSize(imagesx($img), imagesy($img));
 
         // Get optimal size based on resizing type
@@ -49,6 +49,8 @@ class ImageResizer
 
         if ($resize_type === ImageResizer::RESIZE_TYPE_CROP) {
             $imageResized = $this->crop($imageResized, $type, $newSize, $expectedSize);
+        } else if ($resize_type === ImageResizer::RESIZE_TYPE_FILL) {
+            $imageResized = $this->fill($imageResized, $type, $newSize, $expectedSize);
         }
 
         return $this->saveImage($imageResized, $type, $output, $quality);
@@ -98,6 +100,67 @@ class ImageResizer
         imagecopyresampled($imageResized, $img, 0, 0, 0, 0,
             $newSize->getWidth(), $newSize->getHeight(),
             $originalSize->getWidth(), $originalSize->getHeight()
+        );
+
+        return $imageResized;
+    }
+
+    /**
+     * @param $img
+     * @param $type
+     * @param ImageSize $originalSize
+     * @param ImageSize $newSize
+     * @param ImageSize $expectedSize
+     * @return resource
+     */
+    private function fill($img, $type, ImageSize $newSize, ImageSize $expectedSize)
+    {
+        // Create image canvas of x, y size
+        $imageResized = imagecreatetruecolor($expectedSize->getWidth(), $expectedSize->getHeight());
+
+        /* start edit */
+        switch ($type) {
+            case IMAGETYPE_PNG:
+                // integer representation of the color black (rgb: 0,0,0)
+                $background = imagecolorallocate($imageResized, 255, 0, 0);
+                // removing the black from the placeholder
+                imagecolortransparent($imageResized, $background);
+
+                // turning off alpha blending (to ensure alpha channel information
+                // is preserved, rather than removed (blending with the rest of the
+                // image in the form of black))
+                imagealphablending($imageResized, false);
+
+                // turning on alpha channel information saving (to ensure the full range
+                // of transparency is preserved)
+                imagesavealpha($imageResized, true);
+
+                break;
+
+            case IMAGETYPE_GIF:
+                // integer representation of the color black (rgb: 0,0,0)
+                $background = imagecolorallocate($imageResized, 255, 255, 255);
+                // removing the black from the placeholder
+                imagecolortransparent($imageResized, $background);
+
+                break;
+
+            case IMAGETYPE_JPEG:
+                // integer representation of the color black (rgb: 0,0,0)
+                $background = imagecolorallocate($imageResized, 255, 255, 255);
+
+                break;
+        }
+        /* end edit */
+
+        // fill the image with the white padding color
+        imagefill($imageResized, 0, 0, $background);
+
+        // copy the original image on top of the new one
+        imagecopymerge ($imageResized, $img,
+            ($expectedSize->getWidth() / 2) - ($newSize->getWidth() / 2), ($expectedSize->getHeight() / 2) - ($newSize->getHeight() / 2), 0, 0,
+            $newSize->getWidth(), $newSize->getHeight(),
+            100
         );
 
         return $imageResized;
