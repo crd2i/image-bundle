@@ -71,8 +71,8 @@ class ImageResizer
         /* start edit */
         switch ($type) {
             case IMAGETYPE_PNG:
-                // integer representation of the color black (rgb: 0,0,0)
-                $background = imagecolorallocate($imageResized, 255, 0, 0);
+            case IMAGETYPE_WEBP:
+                $background = imagecolorallocate($imageResized, 255, 255, 255);
                 // removing the black from the placeholder
                 imagecolortransparent($imageResized, $background);
 
@@ -88,7 +88,6 @@ class ImageResizer
                 break;
 
             case IMAGETYPE_GIF:
-                // integer representation of the color black (rgb: 0,0,0)
                 $background = imagecolorallocate($imageResized, 255, 255, 255);
                 // removing the black from the placeholder
                 imagecolortransparent($imageResized, $background);
@@ -121,8 +120,8 @@ class ImageResizer
         /* start edit */
         switch ($type) {
             case IMAGETYPE_PNG:
-                // integer representation of the color black (rgb: 0,0,0)
-                $background = imagecolorallocate($imageResized, 255, 0, 0);
+            case IMAGETYPE_WEBP:
+                $background = imagecolorallocate($imageResized, 255, 255, 255);
                 // removing the black from the placeholder
                 imagecolortransparent($imageResized, $background);
 
@@ -138,7 +137,6 @@ class ImageResizer
                 break;
 
             case IMAGETYPE_GIF:
-                // integer representation of the color black (rgb: 0,0,0)
                 $background = imagecolorallocate($imageResized, 255, 255, 255);
                 // removing the black from the placeholder
                 imagecolortransparent($imageResized, $background);
@@ -146,7 +144,6 @@ class ImageResizer
                 break;
 
             case IMAGETYPE_JPEG:
-                // integer representation of the color black (rgb: 0,0,0)
                 $background = imagecolorallocate($imageResized, 255, 255, 255);
 
                 break;
@@ -184,8 +181,8 @@ class ImageResizer
 
         switch ($type) {
             case IMAGETYPE_PNG:
-                // integer representation of the color black (rgb: 0,0,0)
-                $background = imagecolorallocate($imageCropped, 255, 0, 0);
+            case IMAGETYPE_WEBP:
+                $background = imagecolorallocate($imageCropped, 255, 255, 255);
                 // removing the black from the placeholder
                 imagecolortransparent($imageCropped, $background);
 
@@ -201,7 +198,6 @@ class ImageResizer
                 break;
 
             case IMAGETYPE_GIF:
-                // integer representation of the color black (rgb: 0,0,0)
                 $background = imagecolorallocate($imageCropped, 255, 255, 255);
                 // removing the black from the placeholder
                 imagecolortransparent($imageCropped, $background);
@@ -247,6 +243,12 @@ class ImageResizer
 
                 if (imagetypes() & IMG_PNG) {
                     $return_value = imagepng($img, $path, $png_quality);
+                }
+                break;
+
+            case IMAGETYPE_WEBP:
+                if (imagetypes() & IMG_WEBP) {
+                    $return_value = imagewebp($img, $path, $quality);
                 }
                 break;
         }
